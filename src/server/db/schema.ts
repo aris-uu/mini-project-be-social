@@ -1,3 +1,4 @@
+import { createId } from '@paralleldrive/cuid2';
 import { relations, sql } from "drizzle-orm";
 import {
   index,
@@ -48,6 +49,11 @@ export const users = createTable("user", {
   }).default(sql`CURRENT_TIMESTAMP`),
   image: varchar("image", { length: 255 }),
 });
+
+export const food = createTable("food", {
+  id: varchar("id", { length: 255 }).notNull().primaryKey().$defaultFn(createId),
+  name: varchar("name", {length : 255}).notNull()
+})
 
 export const usersRelations = relations(users, ({ many }) => ({
   accounts: many(accounts),
